@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"io/ioutil"
 	. "net/http"
@@ -129,7 +130,7 @@ func NewBl3Client() (*Bl3Client, error) {
 
 	res, err := client.Get("https://raw.githubusercontent.com/matt1484/bl3_auto_vip/master/config.json")
 	if err != nil {
-		return nil, errors.New("Failed to get config")
+		return nil, fmt.Errorf("failed to get config: %w", err)
 	}
 
 	configJson, err := res.BodyAsJson()
@@ -143,9 +144,9 @@ func NewBl3Client() (*Bl3Client, error) {
 		client.SetDefaultHeader(header, value)
 	}
 
-	return &Bl3Client {
+	return &Bl3Client{
 		HttpClient: *client,
-		Config: config,
+		Config:     config,
 	}, nil
 }
 

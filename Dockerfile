@@ -1,11 +1,5 @@
-FROM golang:1.12-alpine
+FROM scratch
 
-COPY . /go/src/github.com/matt1484/bl3_auto_vip
-WORKDIR /go/src/github.com/matt1484/bl3_auto_vip
+COPY artifacts/build/release/linux/amd64/bl3-auto-vip /bl3-auto-vip
 
-ENV GO111MODULE=on
-
-RUN apk add git
-RUN go mod download && go mod verify
-
-CMD go run cmd/main.go
+ENTRYPOINT [ "/bl3-auto-vip" ]
